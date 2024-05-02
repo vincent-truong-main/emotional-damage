@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://buebcqh5cu7jt"]
+
+[ext_resource type="Texture2D" uid="uid://bip20lq10vpit" path="res://assets/p2.png" id="1_xi6mr"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fci1i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_xi6mr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Enemy" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(570, 448)
+sprite_frames = SubResource("SpriteFrames_fci1i")
