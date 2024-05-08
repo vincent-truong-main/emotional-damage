@@ -1,10 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://biteiyeis7o5b"]
+[gd_scene load_steps=4 format=3 uid="uid://gc3ed3l2ijp6"]
 
-[ext_resource type="PackedScene" uid="uid://204cg3grea3l" path="res://scenes/Player.tscn" id="1_c8ryf"]
-[ext_resource type="PackedScene" uid="uid://buebcqh5cu7jt" path="res://scenes/Enemy.tscn" id="2_b0vna"]
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_73bc0"]
+[ext_resource type="PackedScene" uid="uid://dho4oxssf30ha" path="res://scenes/player_1.tscn" id="1_d5rtp"]
+[ext_resource type="PackedScene" uid="uid://cfq3ht841rp2n" path="res://scenes/resource.tscn" id="3_er2hl"]
 
 [node name="Main" type="Node"]
+script = ExtResource("1_73bc0")
 
-[node name="Player" parent="." instance=ExtResource("1_c8ryf")]
+[node name="Player1" parent="." instance=ExtResource("1_d5rtp")]
 
-[node name="Area2D" parent="Player" instance=ExtResource("2_b0vna")]
+[node name="Marker2D" type="Marker2D" parent="."]
+
+[node name="Resource" parent="." instance=ExtResource("3_er2hl")]
+position = Vector2(926, 359)
+
+[connection signal="resource_gathered" from="Player1" to="." method="_on_player_1_resource_gathered"]

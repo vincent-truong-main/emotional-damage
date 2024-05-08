@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://cfq3ht841rp2n"]
+
+[ext_resource type="Texture2D" uid="uid://sr8y2o0216ga" path="res://assets/resource.png" id="1_ilc12"]
+[ext_resource type="Script" path="res://scenes/resource.gd" id="1_p8sv6"]
+[ext_resource type="Texture2D" uid="uid://bv1uodaictuwc" path="res://assets/resource_depleted.png" id="3_bjff2"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f7ysv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ilc12")
+}],
+"loop": true,
+"name": &"active",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_bjff2")
+}],
+"loop": true,
+"name": &"depleted",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3mlok"]
+size = Vector2(100, 100)
+
+[node name="Resource" type="RigidBody2D"]
+disable_mode = 2
+collision_mask = 0
+gravity_scale = 0.0
+max_contacts_reported = 5
+contact_monitor = true
+script = ExtResource("1_p8sv6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_f7ysv")
+animation = &"active"
+frame_progress = 0.0469438
+
+[node name="TimerMakeActive" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_3mlok")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_3mlok")
+
+[connection signal="timeout" from="TimerMakeActive" to="." method="_on_timer_make_active_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
