@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://204cg3grea3l"]
+[gd_scene load_steps=3 format=3 uid="uid://dnpoi3xasap1e"]
 
-[ext_resource type="Texture2D" uid="uid://c3g078rcn4b7t" path="res://assets/p1.png" id="1_tvvv0"]
+[ext_resource type="Texture2D" uid="uid://b8pspmba2y2u5" path="res://assets/p1.png" id="1_tvvv0"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rxbk8"]
 animations = [{

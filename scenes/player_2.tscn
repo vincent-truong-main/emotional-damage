@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://flgferux1dvg"]
+
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_5vic7"]
+[ext_resource type="Texture2D" uid="uid://bpqevwrcei8il" path="res://assets/p2.png" id="1_8mc2q"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f7ysv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_8mc2q")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pf8xd"]
+size = Vector2(97, 97)
+
+[node name="Player2" type="Area2D"]
+script = ExtResource("1_5vic7")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_f7ysv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_pf8xd")
