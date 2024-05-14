@@ -17,16 +17,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	#var velocity = Vector2.ZERO
-	#var horizontal = Input.get_axis("move_left", "move_right")
-	#if Input.is_action_pressed("move_down"):
-		#velocity.y += 1
-	#if Input.is_action_pressed("move_up"):
-		#velocity.y -= 1
-	#if Input.is_action_pressed("move_left"):
-		#velocity.x -= 1
-	#if Input.is_action_pressed("move_right"):
-		#velocity.x += 1
 	var velocity = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
