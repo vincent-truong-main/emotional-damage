@@ -1,7 +1,68 @@
 [gd_scene load_steps=5 format=3 uid="uid://dho4oxssf30ha"]
 
-[ext_resource type="Script" path="res://scenes/player.gd" id="1_owbiw"]
 [ext_resource type="Texture2D" uid="uid://b8pspmba2y2u5" path="res://assets/p1.png" id="1_yeqb0"]
+
+[sub_resource type="GDScript" id="GDScript_6lm1n"]
+script/source = "extends CharacterBody2D
+
+signal resource_gathered
+signal shoot
+
+@export var speed = 400
+var screen_size
+var resources = 3
+@export var pos = 0
+@export var max_resources = 6
+
+var can_shoot : bool
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	screen_size = get_viewport_rect().size
+	can_shoot = true
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	var velocity = Input.get_vector(\"move_left\", \"move_right\", \"move_up\", \"move_down\")
+	if velocity.length() > 0:
+		velocity = velocity.normalized() * speed
+		$AnimatedSprite2D.play()
+	else:
+		$AnimatedSprite2D.stop()
+	position += velocity * delta
+	position = position.clamp(Vector2.ZERO, screen_size)
+	
+	if Input.is_action_pressed(\"shoot\") and can_shoot:
+		var direction = Input.get_vector(\"shoot_direction_left\", \"shoot_direction_right\", \"shoot_direction_up\", \"shoot_direction_down\")
+		shoot.emit(position, direction)
+		can_shoot = false
+		$ShotTimer.start()
+	pass
+
+func start():
+	position = pos
+	show()
+	$CollisionShape2D.disabled = false
+
+func _on_area_2d_body_entered(body):
+	print(\"test\")
+	if body.name == \"Resource\":
+		
+		var point = body.resource_gathered()
+		print(point)
+		if point and resources < max_resources:
+			print(\"resource detected\")
+			print(resources)
+			resources += 1
+	else:
+		print(body.name)
+	pass # Replace with function body.
+	
+func _on_shot_timer_timeout():
+	can_shoot = true
+"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_f7ysv"]
 animations = [{
@@ -19,7 +80,7 @@ size = Vector2(97, 97)
 
 [node name="Player1" type="CharacterBody2D"]
 collision_layer = 2
-script = ExtResource("1_owbiw")
+script = SubResource("GDScript_6lm1n")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_f7ysv")
@@ -32,4 +93,7 @@ shape = SubResource("RectangleShape2D_pf8xd")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_pf8xd")
 
+[node name="ShotTimer" type="Timer" parent="."]
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]

@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal resource_gathered
+signal shoot
 
 @export var speed = 400
 var screen_size
@@ -8,10 +9,12 @@ var resources = 3
 @export var pos = 0
 @export var max_resources = 6
 
+var can_shoot : bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_viewport_rect().size
+	can_shoot = true
 	pass # Replace with function body.
 
 
@@ -25,6 +28,13 @@ func _process(delta):
 		$AnimatedSprite2D.stop()
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, screen_size)
+	
+	if Input.is_action_pressed("shoot") and can_shoot:
+		var direction = Input.get_vector("shoot_direction_down", "shoot_direction_left", "shoot_direction_right", "shoot_direction_up")
+		shoot.emit(position, direction)
+		can_shoot = false
+		$ShotTimer.start()
+		
 	pass
 
 func start():
@@ -45,3 +55,5 @@ func _on_area_2d_body_entered(body):
 	else:
 		print(body.name)
 	pass # Replace with function body.
+	
+

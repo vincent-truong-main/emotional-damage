@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://chs8pdb5s1w5x"]
+
+[ext_resource type="Texture2D" uid="uid://ca2sjuccateln" path="res://assets/bullet.png" id="1_i2aab"]
+
+[sub_resource type="GDScript" id="GDScript_obsoc"]
+script/source = "extends Area2D
+
+var direction : Vector2
+var speed :int = 500
+
+func _process(delta):
+	position += speed * delta * direction
+
+
+func _on_timer_timeout():
+	queue_free()
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_81wqn"]
+radius = 57.2189
+
+[node name="Bullet" type="Area2D"]
+script = SubResource("GDScript_obsoc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("1_i2aab")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_81wqn")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
