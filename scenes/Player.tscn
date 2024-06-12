@@ -21,3 +21,5 @@ metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rxbk8")
+
+[node name="ShotTimer" type="Timer" parent="."]
