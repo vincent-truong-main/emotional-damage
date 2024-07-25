@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://flgferux1dvg"]
+[gd_scene load_steps=6 format=3 uid="uid://flgferux1dvg"]
 
 [ext_resource type="Texture2D" uid="uid://bpqevwrcei8il" path="res://assets/p2.png" id="1_8mc2q"]
 
@@ -25,7 +25,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var velocity = Input.get_vector(\"move_left\", \"move_right\", \"move_up\", \"move_down\")
+	var velocity = Input.get_vector(\"move_left_2\", \"move_right_2\", \"move_up_2\", \"move_down_2\")
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
 		$AnimatedSprite2D.play()
@@ -34,10 +34,11 @@ func _process(delta):
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, screen_size)
 	
-	if Input.is_action_pressed(\"shoot\") and can_shoot:
-		var direction = Input.get_vector(\"shoot_direction_down\", \"shoot_direction_left\", \"shoot_direction_right\", \"shoot_direction_up\")
+	if Input.is_action_pressed(\"shoot_2\") and can_shoot:
+		var direction = Input.get_vector(\"shoot_direction_left_2\", \"shoot_direction_right_2\", \"shoot_direction_up_2\", \"shoot_direction_down_2\")
 		shoot.emit(position, direction)
 		can_shoot = false
+		$ShotTimer.start()
 	pass
 
 func start():
@@ -77,7 +78,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pf8xd"]
 size = Vector2(97, 97)
 
-[node name="Player2" type="Area2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_beb3f"]
+size = Vector2(100, 100)
+
+[node name="Player2" type="CharacterBody2D"]
 script = SubResource("GDScript_k6tsi")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -85,3 +89,13 @@ sprite_frames = SubResource("SpriteFrames_f7ysv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_pf8xd")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_beb3f")
+
+[node name="ShotTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
