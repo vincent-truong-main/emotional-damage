@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://gc3ed3l2ijp6"]
+[gd_scene load_steps=8 format=3 uid="uid://gc3ed3l2ijp6"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_73bc0"]
 [ext_resource type="PackedScene" uid="uid://dho4oxssf30ha" path="res://scenes/player_1.tscn" id="1_d5rtp"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://chs8pdb5s1w5x" path="res://scenes/bullet.tscn" id="4_0p0ai"]
 [ext_resource type="Script" path="res://scenes/BulletManager.gd" id="4_5skeu"]
 [ext_resource type="PackedScene" uid="uid://flgferux1dvg" path="res://scenes/player_2.tscn" id="6_37yp6"]
+[ext_resource type="PackedScene" uid="uid://8pxfkusyl3g4" path="res://scenes/hud.tscn" id="7_pmppb"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_73bc0")
@@ -24,7 +25,11 @@ bullet_scene = ExtResource("4_0p0ai")
 [node name="Player2" parent="." instance=ExtResource("6_37yp6")]
 position = Vector2(992, 163)
 
+[node name="Hud" parent="." instance=ExtResource("7_pmppb")]
+
 [connection signal="resource_gathered" from="Player1" to="." method="_on_player_1_resource_gathered"]
+[connection signal="shoot" from="Player1" to="." method="_on_player_1_shoot"]
 [connection signal="shoot" from="Player1" to="BulletManager" method="_on_player_1_shoot"]
 [connection signal="resource_gathered" from="Player2" to="." method="_on_player_2_resource_gathered"]
+[connection signal="shoot" from="Player2" to="." method="_on_player_2_shoot"]
 [connection signal="shoot" from="Player2" to="BulletManager" method="_on_player_2_shoot"]
