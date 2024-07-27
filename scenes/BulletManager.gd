@@ -29,16 +29,15 @@ func calculate_bullet_spawn(pos, dir):
 			pos.x += bullet_size
 	return pos
 
-func _on_player_1_shoot(pos, dir):
+func create_bullet(pos, dir):
 	var bullet = bullet_scene.instantiate()
 	add_child(bullet)
 	bullet.position = calculate_bullet_spawn(pos, dir)
 	bullet.direction = dir.normalized()
 	bullet.add_to_group("bullets")
+	
+func _on_player_1_shoot(pos, dir):
+	create_bullet(pos, dir)
 
 func _on_player_2_shoot(pos, dir):
-	var bullet = bullet_scene.instantiate()
-	add_child(bullet)
-	bullet.position = calculate_bullet_spawn(pos, dir)
-	bullet.direction = dir.normalized()
-	bullet.add_to_group("bullets")
+	create_bullet(pos, dir)
