@@ -47,9 +47,7 @@ func start():
 	$CollisionShape2D.disabled = false
 
 func _on_area_2d_body_entered(body):
-	print(\"test\")
 	if body.name == \"Resource\":
-		
 		var point = body.resource_gathered()
 		print(point)
 		if point and resources < max_resources:
@@ -67,7 +65,6 @@ func _on_shot_timer_timeout():
 func _on_area_2d_area_entered(area):
 	if(area.is_in_group(\"bullets\")):
 		queue_free()
-		print(\"bang bang\")
 "
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_f7ysv"]

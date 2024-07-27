@@ -21,6 +21,7 @@ position = Vector2(349, 519)
 [node name="BulletManager" type="Node2D" parent="."]
 script = ExtResource("4_5skeu")
 bullet_scene = ExtResource("4_0p0ai")
+player_size = 100
 
 [node name="Player2" parent="." instance=ExtResource("6_37yp6")]
 position = Vector2(992, 163)
