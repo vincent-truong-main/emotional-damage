@@ -67,7 +67,6 @@ func _on_shot_timer_timeout():
 func _on_area_2d_area_entered(area):
 	if(area.is_in_group(\"bullets\")):
 		queue_free()
-		print(\"bang bang\")
 "
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_f7ysv"]
@@ -85,7 +84,7 @@ animations = [{
 size = Vector2(97, 97)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_beb3f"]
-size = Vector2(100, 100)
+size = Vector2(97, 97)
 
 [node name="Player2" type="CharacterBody2D"]
 script = SubResource("GDScript_k6tsi")
