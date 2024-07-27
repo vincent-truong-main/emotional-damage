@@ -16,8 +16,8 @@ func _on_timer_timeout():
 	queue_free()
 "
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_81wqn"]
-radius = 57.2189
+[sub_resource type="CircleShape2D" id="CircleShape2D_hoev8"]
+radius = 11.0
 
 [node name="Bullet" type="Area2D"]
 z_index = 3
@@ -27,11 +27,11 @@ script = SubResource("GDScript_obsoc")
 scale = Vector2(0.05, 0.05)
 texture = ExtResource("1_i2aab")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_81wqn")
-
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_hoev8")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

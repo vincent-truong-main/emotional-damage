@@ -47,9 +47,7 @@ func start():
 	$CollisionShape2D.disabled = false
 
 func _on_area_2d_body_entered(body):
-	print(\"test\")
 	if body.name == \"Resource\":
-		
 		var point = body.resource_gathered()
 		print(point)
 		if point and resources < max_resources:
@@ -62,6 +60,11 @@ func _on_area_2d_body_entered(body):
 	
 func _on_shot_timer_timeout():
 	can_shoot = true
+
+
+func _on_area_2d_area_entered(area):
+	if(area.is_in_group(\"bullets\")):
+		queue_free()
 "
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_f7ysv"]
@@ -79,7 +82,6 @@ animations = [{
 size = Vector2(97, 97)
 
 [node name="Player1" type="CharacterBody2D"]
-collision_layer = 2
 script = SubResource("GDScript_6lm1n")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -95,5 +97,6 @@ shape = SubResource("RectangleShape2D_pf8xd")
 
 [node name="ShotTimer" type="Timer" parent="."]
 
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
